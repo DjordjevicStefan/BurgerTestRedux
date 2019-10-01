@@ -1,0 +1,36 @@
+.contolWrapper {
+  display: flex ;
+  flex-direction: row ;
+  justify-content: space-between ;
+  align-items: center ;
+  padding: 0.8rem ;
+}
+
+.contolWrapper button {
+ 
+  font: inherit ;
+  border: 1px solid grey ;
+  cursor: pointer ;
+  outline: none ;
+}
+
+.contolWrapper .less {  
+  background-color: #D39952;
+  color: white;
+}
+
+.contolWrapper .more {
+  background-color: #8F5E1E;
+  color: white;
+}
+
+.contolWrapper button:disabled {
+  cursor: default ;
+  color:  #cccc ;
+}
+
+.label {
+  padding: 10px;
+  font-weight: bold;
+  width: 80px;
+}
