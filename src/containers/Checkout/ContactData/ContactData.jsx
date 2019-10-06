@@ -75,7 +75,7 @@ export class ContactData extends Component {
             { value: "slow", displayValue: "Slow" }
           ]
         },
-        value: "" ,
+        value: "fast" ,
         validation : {} ,
         valid : true
       }

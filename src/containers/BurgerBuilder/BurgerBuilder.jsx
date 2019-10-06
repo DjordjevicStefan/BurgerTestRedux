@@ -4,7 +4,7 @@ import styles from "./Burger.module.css";
 
 import Auxe from "../../hoc/Auxe";
 import { connect } from "react-redux"
-import * as actionTypes from "../../store/actions" ;
+import * as burgerBuilderActions from "../../store/actions/allActions" ;
 
 import { makeOrder , getIngredients } from "../../services/orders";
 import Axios from "../../services/orders" ;
@@ -24,8 +24,8 @@ export class BurgerBuilder extends Component {
     // totalPrice: 1,
     // orderBtnState: false,
     showModal: false,
-    loading: false, 
-    error : false
+    // loading: false, 
+    // error : false
   };
 
   componentDidMount() {
@@ -151,9 +151,9 @@ export class BurgerBuilder extends Component {
       />
     );
    }
-  if (this.state.loading) {
-      order = <Spinner />;
-    }
+  // if (this.state.loading) {
+  //     order = <Spinner />;
+  //   }
 
     return (
       <Auxe>
@@ -179,8 +179,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addIngredientHandler : (ingName) => dispatch({type : actionTypes.ADD_INGREDIENT , ingName: ingName}) ,
-    removeIngredientHandler : (ingName) => dispatch({type : actionTypes.REMOVE_INGREDIENT , ingName: ingName})
+    addIngredientHandler : (ingName) => dispatch(burgerBuilderActions.addIngredient(ingName)) ,
+    removeIngredientHandler : (ingName) => dispatch(burgerBuilderActions.removeIngredient(ingName))
   }
 }
 
