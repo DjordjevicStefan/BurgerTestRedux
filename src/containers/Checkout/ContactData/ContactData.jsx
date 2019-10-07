@@ -3,7 +3,11 @@ import React, { Component } from "react";
 import styles from "./ContactData.module.css";
 import axios from "../../../services/orders";
 import { makeOrder } from "../../../services/orders";
-import {connect} from "react-redux"
+import {connect} from "react-redux"; 
+
+import  withErrorHandler  from "../../../hoc/withErrorHandler/withErrorHandler"
+
+import * as contacDataActionCreators from "../../../store/actions/allActions" ;
 
 import Buttons from "../../../components/Ui/Button/Buttons";
 import Spinner from "../../../components/Ui/Spinner/Spinner";
@@ -80,13 +84,13 @@ export class ContactData extends Component {
         valid : true
       }
     },
-    loading: false, 
+    
     formValid : false 
   };
 
   handleOrder = e => {
     e.preventDefault();
-    this.setState({ loading: true });
+    
 
     let formData = {} 
     for (const name in this.state.orderForm) {
@@ -99,21 +103,22 @@ export class ContactData extends Component {
 
     const order = {
       ingredients: this.props.ing,
-      price: this.props.tprice.totalPrice,
+      price: this.props.tprice,
       formData : formData 
     };
-
+    
+    this.props.onOrder(order) ;
    
-    makeOrder(order)
-      .then(res => {
-        console.log("order submit", res);
-        this.setState({ loading: false });
-        this.props.history.replace("/");
-      })
-      .catch(error => {
-        console.log(error);
-        this.setState({ loading: false });
-      });
+    // makeOrder(order)
+    //   .then(res => {
+    //     console.log("order submit", res);
+    //     this.setState({ loading: false });
+    //     this.props.history.replace("/");
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //     this.setState({ loading: false });
+    //   });
   };
 
   checkValidity (value, rules) {
@@ -170,7 +175,7 @@ export class ContactData extends Component {
     }
 
     let form = null;
-    if (this.state.loading) {
+    if (this.props.loading) {
       form = <Spinner />;
     } else {
       form = (
@@ -211,9 +216,16 @@ export class ContactData extends Component {
 
 const mapStateToProps = state => {
   return {
-    ing : state.ingredients,
-    tprice : state.totalPrice
+    ing : state.burgerBuilder.ingredients,
+    tprice : state.burgerBuilder.totalPrice, 
+    loading : state.orders.loading
   }
 }
 
-export default connect(mapStateToProps)(ContactData);
+const mapDispatchToProps = dispatch => {
+  return {
+    onOrder : (orderData) => dispatch(contacDataActionCreators.purshaseBurger(orderData)) 
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(ContactData, axios))  ;

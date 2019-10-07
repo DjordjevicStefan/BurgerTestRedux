@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Route } from "react-router-dom";
+import { Route , Redirect} from "react-router-dom";
 
 import { connect } from "react-redux"
 
@@ -36,6 +36,11 @@ export class Checkout extends Component {
   };
 
   render() {
+    let redirect = null ;
+    if (!this.props.ing) {
+      redirect = <Redirect to="/"/>
+    }
+
     let checkout = null;
     if (this.state.load) {
       checkout = (
@@ -58,6 +63,7 @@ export class Checkout extends Component {
 
     return (
       <div>
+        {redirect}
         {checkout}
         {/* {console.log("lokacija stizanja do ovde", this.props)} */}
       </div>
@@ -67,8 +73,8 @@ export class Checkout extends Component {
 
 const mapStateToProps = state => {
   return {
-    ing : state.ingredients,
-    tprice : state.totalPrice
+    ing : state.burgerBuilder.ingredients,
+    tprice : state.burgerBuilder.totalPrice
   }
 }
 

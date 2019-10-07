@@ -166,10 +166,10 @@ export class BurgerBuilder extends Component {
 
 const mapStateToProps = state => {
   return {
-    ing: state.ingredients,
-    tprice: state.totalPrice,
-    loading: state.loading,
-    error: state.error
+    ing: state.burgerBuilder.ingredients,
+    tprice: state.burgerBuilder.totalPrice,
+    loading: state.burgerBuilder.loading,
+    error: state.burgerBuilder.error
   };
 };
 
