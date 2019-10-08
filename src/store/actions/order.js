@@ -1,6 +1,6 @@
 import * as actionTypes  from "./actionTypes" ;
 
-import {makeOrder} from "../../services/orders" ;
+import {makeOrder, getOrders } from "../../services/orders" ;
 
 
 export const purchaseBurgerStart = () => {
@@ -37,4 +37,44 @@ export const purshaseBurger = (orderData) => {
        dispatch(purchaseBurgerFail(error));
       });
     }
+}
+
+// const fetchOrdersStart = () => {
+//   return {
+//     type : actionTypes.FETCH_ORDERS_START
+//   }
+// }
+
+const fetchOrdersSuccess = (ordersArr) => {
+    return {
+      type : actionTypes.FETCH_ORDERS_SUCCESS,
+      orders : ordersArr
+    }
+}
+
+const fetchOrdersFail = (err) => {
+  return {
+    type : actionTypes.PURCHASE_BURGER_FAIL,
+    error : err
+  }
+}
+
+export const fetchOrders = () => {
+  return dispatch => {
+    //  dispatch(fetchOrdersStart())
+      
+     getOrders()
+     .then(res => {
+       
+       let ordersArr = [];
+       for (const order in res.data) {
+         ordersArr.push({ ...res.data[order], key: order });
+       }
+       dispatch(fetchOrdersSuccess(ordersArr));
+      
+     })
+     .catch(err => {
+        dispatch(fetchOrdersFail(err))
+     });
+  }
 }
