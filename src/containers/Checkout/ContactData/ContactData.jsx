@@ -5,6 +5,8 @@ import axios from "../../../services/orders";
 import { makeOrder } from "../../../services/orders";
 import {connect} from "react-redux"; 
 
+import { Redirect} from "react-router-dom";
+
 import  withErrorHandler  from "../../../hoc/withErrorHandler/withErrorHandler"
 
 import * as contacDataActionCreators from "../../../store/actions/allActions" ;
@@ -174,13 +176,22 @@ export class ContactData extends Component {
       });
     }
 
+   
+
     let form = null;
+
+    
+
     if (this.props.loading) {
       form = <Spinner />;
+
+        
+
     } else {
+      
       form = (
         <form onSubmit={this.handleOrder}>
-          {/* <input className={styles.Input} type="email" name="email" placeholder="Your email"/>
+        {/* <input className={styles.Input} type="email" name="email" placeholder="Your email"/>
       <input className={styles.Input} type="text" name="name" placeholder="Your name"/>
       <input className={styles.Input} type="text" name="street" placeholder="Street"/>
       <input className={styles.Input} type="text" name="postal" placeholder="Postal code"/> */}
@@ -218,7 +229,8 @@ const mapStateToProps = state => {
   return {
     ing : state.burgerBuilder.ingredients,
     tprice : state.burgerBuilder.totalPrice, 
-    loading : state.orders.loading
+    loading : state.orders.loading,
+    finished : state.orders.finished
   }
 }
 

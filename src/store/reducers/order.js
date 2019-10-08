@@ -3,7 +3,8 @@ import * as actionTypes from "../actions/actionTypes" ;
 const initialState = {
   loading : false , 
   orders : [] ,
-  error : null
+  error : null, 
+  finished : false 
 }
 
 const reducer = (state = initialState , action) => {
@@ -13,7 +14,8 @@ const reducer = (state = initialState , action) => {
        
       return {
         ...state ,
-        loading : true
+        loading : true, 
+        finished: false
       }
 
       case actionTypes.PURCHASE_BURGER_SUCCESS :
@@ -25,7 +27,8 @@ const reducer = (state = initialState , action) => {
           ...state ,
           //// moze ovako da se dodaje order ali nam to realno ne treba jer imamo poziv u bazu za sve ordere!!!
           orders : state.orders.concat(newOrder) ,
-          loading : false
+          loading : false, 
+          finished : true 
         }
 
         case actionTypes.PURCHASE_BURGER_FAIL :

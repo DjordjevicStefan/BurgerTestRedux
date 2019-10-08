@@ -37,7 +37,9 @@ export class Checkout extends Component {
 
   render() {
     let redirect = null ;
-    if (!this.props.ing) {
+
+    //// ridajrektujemo i ako nema propsa ,za svaki slucaj , i ako je prosao req za formu kako treba u bazu- za njega vezan ovaj prop finished
+    if (!this.props.ing || this.props.finished) {
       redirect = <Redirect to="/"/>
     }
 
@@ -74,7 +76,8 @@ export class Checkout extends Component {
 const mapStateToProps = state => {
   return {
     ing : state.burgerBuilder.ingredients,
-    tprice : state.burgerBuilder.totalPrice
+    tprice : state.burgerBuilder.totalPrice,
+    finished : state.orders.finished
   }
 }
 
