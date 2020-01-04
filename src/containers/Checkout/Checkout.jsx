@@ -8,7 +8,6 @@ import styles from "./Checkout.module.css";
 import CheckoutSummary from "../../components/Order/CheckoutSummary";
 import Spinner from "../../components/Ui/Spinner/Spinner";
 
-import query from "query-string";
 import ContactData from "./ContactData/ContactData";
 
 export class Checkout extends Component {
@@ -38,7 +37,7 @@ export class Checkout extends Component {
   render() {
     let redirect = null ;
 
-    //// ridajrektujemo i ako nema propsa ,za svaki slucaj , i ako je prosao req za formu kako treba u bazu- za njega vezan ovaj prop finished
+    //// redirektujemo i ako nema propsa ,za svaki slucaj , i ako je prosao req za formu kako treba u bazu- za njega vezan ovaj prop finished
     if (!this.props.ing || this.props.finished) {
       redirect = <Redirect to="/"/>
     }

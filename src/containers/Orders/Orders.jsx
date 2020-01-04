@@ -20,6 +20,9 @@ export class Orders extends Component {
   componentDidMount() {
 
      this.props.fetchOrders()
+    
+    /// stari kod bez async poziva u actionCreators 
+     
     // getOrders()
     //   .then(res => {
     //     console.log("res", res.data);
