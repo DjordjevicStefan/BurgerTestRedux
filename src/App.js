@@ -5,6 +5,7 @@ import BurgerBuilder from "../src/containers/BurgerBuilder/BurgerBuilder"
 import Checkout from "../src/containers/Checkout/Checkout" ;
 import Orders from "../src/containers/Orders/Orders" ;
 import {Route , Switch} from "react-router-dom" ;
+import Auth from "./containers/Auth/Auth" ;
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Switch>
         <Route path="/checkout" component={Checkout} /> 
         <Route path="/orders" component={Orders} /> 
+        <Route path="/auth" exact component={Auth} /> 
         <Route path="/" exact component={BurgerBuilder} /> 
         </Switch>
       </Layout>
