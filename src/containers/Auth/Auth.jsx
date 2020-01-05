@@ -1,6 +1,10 @@
 import React, { Component } from 'react' ;
 
-import styles from "./Auth.module.css"
+import styles from "./Auth.module.css" ; 
+
+
+import { connect } from "react-redux"
+import * as actionCreators from "../../store/actions/allActions"; 
 
 
 import Input from "../../components/Ui/Input/Input"
@@ -97,6 +101,11 @@ export class Auth extends Component {
 
   }
 
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.props.onAuth(this.state.controls.email.value , this.state.controls.password.value) ; 
+  }
+
   render() {
 
     let formElementArrey = [];
@@ -108,7 +117,7 @@ export class Auth extends Component {
     }
     
     let form = (
-      <form >
+      <form onSubmit={this.handleSubmit}>
         {formElementArrey.map(input => {
         return  (<Input
             key={input.id}
@@ -137,4 +146,10 @@ export class Auth extends Component {
   }
 }
 
-export default Auth ;
+const mapDispatchToProps = dispatch => {
+  return {
+    onAuth : (name, password) => dispatch(actionCreators.auth(name, password))
+  }
+}
+
+export default connect(null, mapDispatchToProps )(Auth) ;
