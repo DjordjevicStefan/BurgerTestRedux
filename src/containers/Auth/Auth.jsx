@@ -9,6 +9,7 @@ import * as actionCreators from "../../store/actions/allActions";
 
 import Input from "../../components/Ui/Input/Input"
 import Button from "../../components/Ui/Button/Buttons"
+import Spinner from "../../components/Ui/Spinner/Spinner"
 
 export class Auth extends Component {
   state = {
@@ -41,7 +42,8 @@ export class Auth extends Component {
         valid : false,
         touched : false 
       },
-    }
+    } , 
+    isSignup : true 
   }
 
 
@@ -103,7 +105,11 @@ export class Auth extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    this.props.onAuth(this.state.controls.email.value , this.state.controls.password.value) ; 
+    this.props.onAuth(this.state.controls.email.value , this.state.controls.password.value, this.state.isSignup) ; 
+  }
+
+  switchAuthMode = () => {
+     this.setState((prevState) => ({isSignup : !prevState.isSignup}) )
   }
 
   render() {
@@ -115,6 +121,10 @@ export class Auth extends Component {
         config: this.state.controls[key]
       });
     }
+
+    
+
+    
     
     let form = (
       <form onSubmit={this.handleSubmit}>
@@ -132,24 +142,48 @@ export class Auth extends Component {
           />)
         })}
         <Button btnType="Success">
-          Order  
+          Submit  
         </Button>
+        <Button clicked={this.switchAuthMode} btnType="Danger" btnFunction="button">
+           Change mode to {this.state.isSignup ? "sign in" : "register"}
+        </Button>
+
       </form>
-    );
+      
+    ); 
+
+    if (this.props.loading) {
+      form = <Spinner></Spinner>
+   } 
+
+    let errorMsg = null ;
+    if (this.props.error) {
+      // console.log("error" , this.props.error.message)
+    errorMsg = <p>{this.props.error.message}</p> ;
+   } 
 
 
     return (
       <div className={styles.Auth}>
+        {errorMsg}
         {form}
       </div>
     )
   }
 }
 
+const mapStateToProps = (state) => {
+   return { 
+     token  : state.auth.token, 
+     loading : state.auth.loading, 
+     error : state.auth.error
+   }
+}
+
 const mapDispatchToProps = dispatch => {
   return {
-    onAuth : (name, password) => dispatch(actionCreators.auth(name, password))
+    onAuth : (name, password, isSignup) => dispatch(actionCreators.auth(name, password, isSignup))
   }
 }
 
-export default connect(null, mapDispatchToProps )(Auth) ;
+export default connect(mapStateToProps, mapDispatchToProps )(Auth) ;

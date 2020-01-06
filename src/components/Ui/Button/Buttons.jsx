@@ -8,6 +8,7 @@ export default function Button(props) {
       disabled={props.disabled}
       className={styles.Button + " " + styles[props.btnType]}
       onClick={props.clicked}
+      type={props.btnFunction || "submit"}
     >
       {props.children}
     </button>

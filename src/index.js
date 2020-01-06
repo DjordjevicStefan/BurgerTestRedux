@@ -9,13 +9,15 @@ import thunk from "redux-thunk"
 
 import burgerBuilderReducer from "./store/reducers/burgerBuilder";
 import orderReducer from "./store/reducers/order" ;
+import authReducer from "./store/reducers/auth" ;
 
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter } from "react-router-dom";
 
 const rootReducer = combineReducers({
   burgerBuilder : burgerBuilderReducer ,
-  orders : orderReducer
+  orders : orderReducer,
+  auth : authReducer
 })
 
 
