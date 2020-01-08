@@ -4,7 +4,7 @@ import styles from "./Burger.module.css";
 
 import Auxe from "../../hoc/Auxe";
 import { connect } from "react-redux";
-import * as burgerBuilderActions from "../../store/actions/allActions";
+import * as actionCreators from "../../store/actions/allActions";
 
 import { makeOrder, getIngredients } from "../../services/orders";
 import Axios from "../../services/orders";
@@ -40,10 +40,19 @@ export class BurgerBuilder extends Component {
   }
 
   handleShowModal = () => {
-    this.setState({
-      showModal: true
-    });
-  };
+    
+    if (this.props.isAuthenticated) {
+      this.setState({
+        showModal: true
+      });
+   } else {
+    //// zasto menjamo path ako i dalje ne znamo da li je pravio sendvic uopste ?  
+    //// zato sto posle gazi path u auth komponenti u zavisnosti od toga da li je user nesto pravio od sendvica !!!!
+    this.props.onSetAuthRedirectPath("/checkout")
+      
+     this.props.history.push("/auth") ;
+   }
+};
 
   hadnleHideModal = () => {
     this.setState({
@@ -75,6 +84,9 @@ export class BurgerBuilder extends Component {
   };
 
   updateOrderBtnState = ingredientsPreSetState => {
+
+    
+
     const ingredientsNumbers = Object.values(ingredientsPreSetState);
     const sum = ingredientsNumbers.reduce((accu, currentValue) => {
       return accu + currentValue;
@@ -123,6 +135,7 @@ export class BurgerBuilder extends Component {
           {/* {console.log("ing ing",this.state.ingredients)} */}
           <Burger ingredients={this.props.ing} />
           <BuildControls
+            isAuthenticated={this.props.isAuthenticated}
             totalPrice={this.props.tprice}
             currentIngState={this.props.ing}
             onAdd={this.props.addIngredientHandler}
@@ -169,17 +182,19 @@ const mapStateToProps = state => {
     ing: state.burgerBuilder.ingredients,
     tprice: state.burgerBuilder.totalPrice,
     loading: state.burgerBuilder.loading,
-    error: state.burgerBuilder.error
+    error: state.burgerBuilder.error, 
+    isAuthenticated : state.auth.token !== null 
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     addIngredientHandler: ingName =>
-      dispatch(burgerBuilderActions.addIngredient(ingName)),
+      dispatch(actionCreators.addIngredient(ingName)),
     removeIngredientHandler: ingName =>
-      dispatch(burgerBuilderActions.removeIngredient(ingName)),
-    initialIngredients: () => dispatch(burgerBuilderActions.initIngredients())
+      dispatch(actionCreators.removeIngredient(ingName)),
+    initialIngredients: () => dispatch(actionCreators.initIngredients()),
+    onSetAuthRedirectPath : (path) => dispatch(actionCreators.setAuthRedirectPath(path))
   };
 };
 

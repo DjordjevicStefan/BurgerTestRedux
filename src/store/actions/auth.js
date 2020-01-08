@@ -24,11 +24,18 @@ const authSuccess = (token , localId) => {
 }
 
 export const logout = () => {
-  console.log("okinuo logout");
+  
   return {
     type : actionTypes.AUTH_LOGOUT
   }
 }
+
+export const setAuthRedirectPath = (path) => {
+   return {
+     type : actionTypes.SET_AUTH_REDIRECT_PATH , 
+     path  : path
+   }
+} 
 
 ///// async part
 export const auth = (email, password, isSignup) => {
