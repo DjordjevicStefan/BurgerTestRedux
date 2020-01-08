@@ -26,10 +26,10 @@ const purchaseBurgerFail = (error) => {
 }
 
 
-export const purshaseBurger = (orderData) => {
+export const purshaseBurger = (orderData, token) => {
     return dispatch => {
       dispatch(purchaseBurgerStart())  
-      makeOrder(orderData)
+      makeOrder(orderData, token)
       .then(res => {
          dispatch(purchaseBurgerSuccess( orderData , res.data));
       })
@@ -59,11 +59,11 @@ const fetchOrdersFail = (err) => {
   }
 }
 
-export const fetchOrders = () => {
+export const fetchOrders = (token) => {
   return dispatch => {
     //  dispatch(fetchOrdersStart())
       
-     getOrders()
+     getOrders(token)
      .then(res => {
        
        let ordersArr = [];

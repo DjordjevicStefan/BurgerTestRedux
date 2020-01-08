@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import { connect } from "react-redux"
 
 import Auxe from "../../hoc/Auxe"
 import Toolbar from "../Navigation/Toolbar/Toolbar"
@@ -30,8 +31,8 @@ export class  Layout extends Component {
      
     return (
       <Auxe>
-      <Toolbar toggleMenu={this.handleToggleMenu} />
-      <SideDrawer showSideDrawer={this.state.showSideDrawer} closeBackdrop={this.hadnleCloseBackdrop} />
+      <Toolbar isAuthenticated={this.props.isAuthenticated} toggleMenu={this.handleToggleMenu} />
+      <SideDrawer isAuthenticated={this.props.isAuthenticated} showSideDrawer={this.state.showSideDrawer} closeBackdrop={this.hadnleCloseBackdrop} />
         <main className={styles.topMargin}>
            {this.props.children}
         </main>
@@ -43,6 +44,10 @@ export class  Layout extends Component {
  
 }
 
+const mapStateToProps = state => {
+   return {
+     isAuthenticated : state.auth.token !== null 
+   }
+}
 
-
-export default Layout ;
+export default connect(mapStateToProps)(Layout);

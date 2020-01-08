@@ -19,7 +19,7 @@ export class Orders extends Component {
 
   componentDidMount() {
 
-     this.props.fetchOrders()
+     this.props.fetchOrders(this.props.token)
     
     /// stari kod bez async poziva u actionCreators 
      
@@ -70,14 +70,15 @@ export class Orders extends Component {
 const mapStateToProps = (state) => {
   return {
     load : state.orders.load, 
-    orders : state.orders.orders
+    orders : state.orders.orders,
+    token : state.auth.token
   }
 }
 
 
 const mapDispatchToProps = dispatch => {
   return {
-      fetchOrders : () => dispatch(fetchOrders()) 
+      fetchOrders : (token) => dispatch(fetchOrders(token)) 
   }
 }
 

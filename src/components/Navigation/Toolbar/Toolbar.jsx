@@ -14,7 +14,7 @@ export default function Toolbar(props) {
        <DrawerToggle toggleMenu={props.toggleMenu}/>
       <Logo height="80%" /> 
       <nav className={styles.DesktopOnly}>
-      <NavigationItems />
+      <NavigationItems isAuthenticated={props.isAuthenticated} />
       </nav>
       
     </header>

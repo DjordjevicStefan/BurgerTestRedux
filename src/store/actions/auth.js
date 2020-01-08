@@ -23,6 +23,13 @@ const authSuccess = (token , localId) => {
     }
 }
 
+export const logout = () => {
+  console.log("okinuo logout");
+  return {
+    type : actionTypes.AUTH_LOGOUT
+  }
+}
+
 ///// async part
 export const auth = (email, password, isSignup) => {
    return dispatch => {
@@ -42,11 +49,21 @@ export const auth = (email, password, isSignup) => {
       axios.post(url , data).then(
         response => {
             console.log("response" , response) ; 
-            dispatch(authSuccess(response.data.idToken, response.data.localId))
+            dispatch(authSuccess(response.data.idToken, response.data.localId));
+            /// calling another async action creator function
+            dispatch(checkAuthTimeout(response.data.expiresIn)) ;
         }
       ).catch(error => {
         console.log("error" , error) ;
         dispatch(authFail(error.response.data.error))
       })
+   }
+}
+
+const checkAuthTimeout = (expireTime) => {
+   return dispatch => {
+     setTimeout(() => {
+      dispatch(logout()) ;
+     }, parseInt(expireTime)  * 1000);
    }
 }
