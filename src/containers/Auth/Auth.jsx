@@ -48,6 +48,8 @@ export class Auth extends Component {
   }
 
   componentDidMount () {
+     //// ovo nema nikakve logike? render se okida pre CDM i posto je defoltni redirectPath iz baze "/" ovaj ovde check je totalno nepotreban ? svakako ce ga stalno gurati na "/" ako nista nije menjao u burger builderu.
+
      if (!this.props.building && this.props.authRedirectPath !== "/") {
         this.props.onSetAuthRedirectPath("/") ;
      }
