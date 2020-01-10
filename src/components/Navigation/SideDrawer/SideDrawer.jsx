@@ -14,7 +14,7 @@ const SideDrawer = props => {
   return (
     <Auxe>
       <Backdrop showBackdrop={props.showSideDrawer} closeBackdrop={props.closeBackdrop} />
-      <div className={style.SideDrawer + " " + (props.showSideDrawer ? style.Open : style.Close)} >
+      <div onClick={props.closeBackdrop} className={style.SideDrawer + " " + (props.showSideDrawer ? style.Open : style.Close)} >
         <Logo height="12%" />
 
         <nav>
